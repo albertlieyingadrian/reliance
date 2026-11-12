@@ -36,13 +36,16 @@ def test_the_baseline_splits_between_the_two_rules(dgp):
 
 
 
-def test_the_counterfactual_set_admits_no_hedging(dgp):
+def test_the_counterfactual_set_admits_no_hedging():
     """Every example is a case where the two rules disagree, so reading the shortcut scores 0.
 
     Seeded here, not in the generator: the toy draws fresh data every call by design, so a test
-    with a threshold has to pin the draw itself or it is a coin flip on the tail.
+    with a threshold has to pin the draw itself or it is a coin flip on the tail. The dictionary
+    is a draw too, so it is built here, under the seed, rather than taken from the shared fixture:
+    about 2% of dictionaries put the core close enough to the spurious direction to miss the bar.
     """
     torch.manual_seed(0)
+    dgp = Concepts(**SETUPS['small'])
     x, y = dgp.counterfactual(4000)
     coord = x @ dgp.get_spurious()
 
