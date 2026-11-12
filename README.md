@@ -62,7 +62,7 @@ reliance/
 from reliance import dependence as D
 from reliance.contrast_subspaces import dom
 
-v    = dom(activations_with_concept, activations_without)
+v    = dom(activations_with_concept, activations_without)[0]   # (1, c) line -> direction (c,)
 z    = tap[layer]                        # hooked activation (n, p, c)
 pen  = D.gradinput(readout, z, v).pow(2).mean()
 loss = cross_entropy(model(x), y) + lam * pen
